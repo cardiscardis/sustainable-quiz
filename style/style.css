@@ -1,0 +1,171 @@
+html {
+  font-size: 100%;
+}
+
+:root {
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --primary-fonts: "Roboto", sans-serif;
+}
+
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+h1,
+p,
+li,
+a {
+  margin: 0;
+  line-height: 1;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+}
+
+.page-width {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+body {
+  font-family: var(--primary-fonts);
+  background: var(--color-light-gray);
+  color: var(--color-black);
+  background: linear-gradient(to right, #c6fbd9, #abe8dd) no-repeat;
+}
+
+/* Navbar */
+.showcase {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  gap: 6.25rem;
+  padding-block: 8vh;
+}
+
+.showcase__container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.showcase__title {
+  font-size: 3rem;
+  font-weight: 400;
+}
+
+.showcase__images {
+  display: grid;
+  max-width: 20rem;
+  margin: 0 auto;
+}
+
+.showcase__images img {
+  width: 100%;
+  height: 100%;
+}
+
+.showcase__content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-flow: column;
+}
+
+.showcase__content-title {
+  font-size: 2rem;
+  margin-bottom: 1.875rem;
+  font-weight: 500;
+}
+
+.showcase__content-desc {
+  font-size: 1.5625rem;
+  line-height: 1.3;
+  margin-bottom: 2rem;
+}
+
+.showcase__content-link {
+  font-size: 1.25rem;
+  background: var(--color-black);
+  color: var(--color-white);
+  padding: 1.25rem 4rem;
+  border: 2px solid transparent;
+  transition: 0.3s all;
+}
+
+.showcase__content-link:hover {
+  background: transparent;
+  color: var(--color-black);
+  border-color: var(--color-black);
+}
+
+@media (max-width: 1300px) {
+  .page-width {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .showcase__container {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+  }
+
+  .showcase__content {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .showcase {
+    gap: 3.125rem;
+  }
+
+  .showcase__title {
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+
+  .showcase__images {
+    max-width: 10rem;
+  }
+
+  .showcase__container {
+    gap: 2rem;
+  }
+
+  .showcase__content-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.625rem;
+  }
+
+  .showcase__content-desc {
+    font-size: 1rem;
+    margin-bottom: 0.625rem;
+  }
+
+  .showcase__content-link {
+    padding: 0.625rem 2rem;
+    font-size: 0.875rem;
+  }
+}
