@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style/fonts.css" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <title>Quiz</title>
+  </head>
+  <body>
+    <section class="showcase page-width">
+      <div class="quiz__container">
+        <div class="quiz__image">
+          <img src="/images/flower.png" alt="Flower" />
+        </div>
+        <div class="quiz__content">
+          <h2 class="quiz__title quiz__results-title">Your crush is trash!</h2>
+          <p class="quiz__desc">But he can improve...</p>
+
+          <div class="quiz__result">
+            <p><strong>Recycle:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+            <img src="/images/cat_image.png" alt="cat" />
+          </div>
+          <div class="quiz__result">
+            <p><strong>Commute:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+            <img src="/images/cat_image.png" alt="cat" />
+          </div>
+          <div class="quiz__result">
+            <p><strong>Reduce consumption:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+            <img src="/images/cat_image.png" alt="cat" />
+          </div>
+        </div>
+      </div>
+
+      <a class="showcase__content-link" href="/index.html">Calculate Again!</a>
+    </section>
+
+    <script>
+      const progressBar = document.querySelectorAll("#progressBar");
+
+      progressBar.forEach((element) => {
+        element.addEventListener("input", function () {
+          console.log(element.value);
+          const value = element.value * 20;
+          element.style.background = `linear-gradient( to right, #4ae98c ${value}%, #71c19d ${value}%, #90c1b1 100%)`;
+        });
+      });
+    </script>
+  </body>
+</html>
