@@ -3,39 +3,67 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/style/fonts.css" />
-    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="../style/fonts.css" />
+    <link rel="stylesheet" href="../style/style.css" />
     <title>Quiz</title>
   </head>
   <body>
     <section class="showcase page-width">
       <div class="quiz__container">
         <div class="quiz__image">
-          <img src="/images/flower.png" alt="Flower" />
+          <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+          <!-- <img src="../images/flower.png" alt="Flower" /> -->
         </div>
         <div class="quiz__content">
           <h2 class="quiz__title quiz__results-title">Your crush is trash!</h2>
           <p class="quiz__desc">But he can improve...</p>
 
           <div class="quiz__result">
-            <p><strong>Recycle:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-            <img src="/images/cat_image.png" alt="cat" />
+            <p><strong id="one">Recycle:</strong> <p id="first">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p></p>
+            <img src="../images/cat_image.png" alt="cat" />
           </div>
           <div class="quiz__result">
-            <p><strong>Commute:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-            <img src="/images/cat_image.png" alt="cat" />
+            <p><strong id="two">Commute:</strong> <p id="second"> ipsum dolor sit amet, consectetur adipiscing elit</p></p>
+            <img src="../images/cat_image.png" alt="cat" />
           </div>
           <div class="quiz__result">
-            <p><strong>Reduce consumption:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-            <img src="/images/cat_image.png" alt="cat" />
+            <p><strong id="three">Reduce consumption:</strong><p id="third"> Lorem ipsum dolor sit amet, consectetur adipiscing elit</p></p>
+            <img src="../images/cat_image.png" alt="cat" />
           </div>
         </div>
       </div>
 
-      <a class="showcase__content-link" href="/index.html">Calculate Again!</a>
+      <a class="showcase__content-link" href="../index.html">Calculate Again!</a>
     </section>
 
     <script>
+      let arr = [];
+      const urlString  = window.location.search;
+      let paramString = urlString.split('?')[1];
+      let queryString = new URLSearchParams(paramString);   
+      let total = queryString.get('total'); 
+
+      let i = 0;
+      for (let pair of queryString.entries()) {
+        console.log(i);
+        console.log("Key is: " + pair[0]);
+        console.log("Value is: " + pair[1]);
+        if (pair[0] !== 'total') arr.push({key: pair[0], value: pair[1]});
+        i += 1
+      }
+
+      console.log(arr)
+
+      document.getElementById('one').innerHTML = arr[0].key;
+      document.getElementById('first').innerHTML = `He scored ${arr[0].value}, but can improve on ...`;
+      document.getElementById('two').innerHTML = arr[1].key;
+      document.getElementById('second').innerHTML = `He scored ${arr[1].value}, but can improve on ...`;
+      document.getElementById('three').innerHTML = arr[2].key;
+      document.getElementById('third').innerHTML = `He scored ${arr[2].value}, but can do better by ...`;
+
+      
+      
+
       const progressBar = document.querySelectorAll("#progressBar");
 
       progressBar.forEach((element) => {
@@ -45,6 +73,66 @@
           element.style.background = `linear-gradient( to right, #4ae98c ${value}%, #71c19d ${value}%, #90c1b1 100%)`;
         });
       });
+      
+    </script>
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
+    <script>
+      /* let paramString2 = urlString.split('?')[1];
+      let queryString2 = new URLSearchParams(paramString);  */ 
+      total = Number((total/65) * 100).toFixed();
+      var data = {
+        labels: [
+          "score",
+          "remaining",
+        ],
+        datasets: [{
+          data: [total, 100-total],
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+          ],
+          hoverBackgroundColor: [
+            "#36A2EB",
+            "#FFCE56"
+          ]
+        }]
+      };
+
+      var promisedDeliveryChart = new Chart(document.getElementById('myChart'), {
+        type: 'doughnut',
+        data: data,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
+        },
+        plugins: [{
+          id: 'text',
+          beforeDraw: function(chart, a, b) {
+            var width = chart.width,
+              height = chart.height,
+              ctx = chart.ctx;
+
+            ctx.restore();
+            var fontSize = (height / 144).toFixed(2);
+            ctx.font = fontSize + "em sans-serif";
+            ctx.textBaseline = "middle";
+
+            var text = `${total}%`,
+              textX = Math.round((width - ctx.measureText(text).width) / 2),
+              textY = height / 2;
+
+            ctx.fillText(text, textX, textY);
+            ctx.save();
+          }
+        }]
+      });
+
     </script>
   </body>
 </html>
