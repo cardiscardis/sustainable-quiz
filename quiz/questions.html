@@ -15,9 +15,9 @@
         </div>
         <div class="quiz__content">
           <h2 class="quiz__title">Is my boyfriend sustainable?</h2>
-          <form name="myform">
+          <form id="myForm" name="myform">
 
-            <div class="input__wrapper">
+          <!--   <div class="input__wrapper">
               <label class="input__label" for="Recycles">Does he recycles materials such as plastic and paper?</label>
               <input type="range" name="Recycles" id="progressBar" class="progress-bar" min="0" max="5" value="0" />
             </div>
@@ -128,12 +128,131 @@
             <div class="input__wrapper">
               <label class="input__label" for="Lights">Do you turn off lights and appliances when not in use?</label>
               <input type="range" name="Lights" id="progressBar" class="progress-bar" min="0" max="5" value="0" />
-            </div>
+            </div> -->
           </form>
         </div>
       </div>      
       <input type="submit" class="showcase__content-link" value="Calculate" onclick="onClick(event)" />
     </section>
+    <script
+    src="./questions.js">
+    </script>
+    <script>
+      
+      function randomizeArray(arr) {
+        let result = []
+        while(arr.length !== 0) {
+          let randomIndex = Math.floor(Math.random() * arr.length);
+          result.push(arr[randomIndex]);
+          arr.splice(randomIndex, 1);
+        }
+        arr = result;
+        return arr;
+      }
+
+      function compareByData(a, b) {
+        var valDiff = a.value - b.value;
+        return valDiff;
+      }
+    </script>
+    <script>
+
+      const urlString  = window.location.search;
+      let paramString = urlString.split('?')[1];
+      let queryString = new URLSearchParams(paramString);   
+      let par = queryString.get('q');
+
+      let questions = par === 'boyfriend' ? b_questions : g_questions;
+
+      for (let q of randomizeArray(questions)) {
+     
+        if (q.type === 'choice') {
+          
+          let fieldsetDiv = document.createElement('div');
+          fieldsetDiv.className = "quiz__fieldset";
+
+          for (let cp of q.choice_and_points) {
+            console.log(cp)
+
+            let path;
+            let radioWrapperDiv;
+
+            let svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+
+            // if (cp?.svg?.xmlns) svg.setAttributeNS(null, 'xmlns', cp?.svg?.xmlns);
+            // if (cp?.svg?.xlink) svg.setAttributeNS(null, 'xmlns:xlink', cp?.svg?.xlink);
+            // if (cp?.svg?.space) svg.setAttributeNS(null, 'xml:space', cp?.svg?.space);
+            if (cp?.svg?.viewBox) svg.setAttributeNS(null, 'viewBox', cp?.svg?.viewBox);
+            if (cp?.svg?.version) svg.setAttributeNS(null, 'version', cp?.svg?.version);
+            
+            if (cp?.svg?.x) svg.setAttributeNS(null, 'x', cp?.svg?.x);
+            if (cp?.svg?.y) svg.setAttributeNS(null, 'y', cp?.svg?.y);
+            if (cp?.svg?.style) svg.setAttributeNS(null, 'style', cp?.svg?.style);
+            if (cp?.svg?.fill) svg.setAttributeNS(null, 'fill', cp?.svg?.fill);
+            if (cp?.svg?.id) svg.setAttributeNS(null, 'id', cp?.svg?.id);
+
+            for (let p of cp?.svg?.paths) {
+              path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+              path.setAttributeNS(null, 'd', p.d);
+              svg.appendChild(path)
+            }
+            console.log(svg)
+
+            let input = document.createElement('input');
+            input.setAttribute('type', 'radio');
+            input.setAttribute('value', cp.point)
+            input.setAttribute('name', q.name);
+
+            radioWrapperDiv = document.createElement('div');
+            radioWrapperDiv.className = 'quiz__radio-wrapper';
+
+            radioWrapperDiv.appendChild(input)
+            radioWrapperDiv.appendChild(svg)
+            fieldsetDiv.appendChild(radioWrapperDiv);
+          }
+
+          let legend = document.createElement('legend');
+          legend.className = 'input__label'
+          legend.setAttribute('for', q.name);
+          legend.innerHTML = q.query;
+
+          let fieldset = document.createElement('fieldset');
+          fieldset.appendChild(legend);
+          fieldset.appendChild(fieldsetDiv);
+  
+          let div = document.createElement('div');
+          div.className = "input__wrapper";
+          div.appendChild(fieldset)
+
+          document.getElementById('myForm').appendChild(div);
+
+         
+        } else {
+
+          let label = document.createElement('label');
+          label.className = 'input__label'
+          label.setAttribute('for', q.name);
+          label.innerHTML = q.query;
+
+          let input = document.createElement('input');
+          input.setAttribute('type', 'range');
+          input.setAttribute('name', q.name)
+          input.setAttribute('id', 'progressBar');
+          input.className = 'progress-bar';
+          input.setAttribute('min', '0');
+          input.setAttribute('max', '5');
+          input.setAttribute('value', '0');
+
+          let div = document.createElement('div');
+          div.className = "input__wrapper";
+
+          div.appendChild(label);
+          div.appendChild(input);
+
+          document.getElementById('myForm').appendChild(div);
+        }
+      }
+    </script>
 
     <script>
       const progressBar = document.querySelectorAll("#progressBar");
@@ -149,26 +268,13 @@
       function onClick() {
         const form = document.forms.namedItem("myform");
         const formData = new FormData(form);
+        console.log(formData);
         let obj = [];
         let str = '';
         for (let value of formData.entries()) {
-          if (value[1] === 'car') {
-            obj.push({key: value[0], value: '0'})
-          } else if (value[1] === 'truck') {
-            obj.push({key: value[0], value: '3'})
-          } else if (value[1] === 'cycle') {
-            obj.push({key: value[0], value: '5'})
-          } else if (value[1] === 'no') {
-            obj.push({key: value[0], value: '0'})
-          } else if (value[1] === 'vegetarian') {
-            obj.push({key: value[0], value: '3'})
-          } else if (value[1] === 'vegan') {
-            obj.push({key: value[0], value: '5'})
-          } else {
-            obj.push({key: value[0], value: value[1]})
-          }
-          
+          obj.push({key: value[0], value: value[1]})
         }
+          
         console.log(obj)
         const sum = obj.reduce((accumulator, currentValue) => accumulator + Number(currentValue.value), 0);
 
@@ -189,30 +295,13 @@
           // console.log(lowestValue)
           // console.log(entries)
         }
-        let randomRes = randomizeArray(entries);
+        let randomRes = randomizeArray(entries).slice(0, 3);
         randomRes.forEach((obj) => {
           str += `${obj.key}=${obj.value}&`;
         })
         
-        window.location.assign(`./result.html?total=${sum}&${str.slice(0,-1)}`)
+        window.location.assign(`./result.html?quiz=${par}&total=${sum}&${str.slice(0,-1)}`)
         return false;
-      }
-
-
-      function randomizeArray(arr) {
-        let result = []
-        while(arr.length !== 0) {
-          let randomIndex = Math.floor(Math.random() * arr.length);
-          result.push(arr[randomIndex]);
-          arr.splice(randomIndex, 1);
-        }
-        arr = result;
-        return arr.slice(0, 3);
-      }
-
-      function compareByData(a, b) {
-        var valDiff = a.value - b.value;
-        return valDiff;
       }
     </script>
   </body>

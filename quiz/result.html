@@ -11,9 +11,10 @@
     <section class="showcase page-width">
       <div class="quiz__container">
         <div class="quiz__image">
-          <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+          <div id="myTotal" style="width:100%;max-width:600px"></div>
+          <!-- <canvas id="myChart" style="width:100%;max-width:600px"></canvas> -->
         </div>
-        <div class="quiz__content">
+        <div id="quiz_content" class="quiz__content">
           <h2 class="quiz__title quiz__results-title">Your crush is trash!</h2>
           <p class="quiz__desc">But he can improve...</p>
 
@@ -34,32 +35,45 @@
 
       <a class="showcase__content-link" href="../index.html">Calculate Again!</a>
     </section>
-
+    <script
+    src="./questions.js">
+    </script>
     <script>
       let arr = [];
       const urlString  = window.location.search;
       let paramString = urlString.split('?')[1];
       let queryString = new URLSearchParams(paramString);   
       let total = queryString.get('total'); 
+      let quiz = queryString.get('quiz');
 
-      let i = 0;
+      let questions = quiz === 'boyfriend' ? b_questions : g_questions;
+      total = Number((total/(questions.length * 5)) * 100).toFixed();
+
       for (let pair of queryString.entries()) {
-        console.log(i);
-        console.log("Key is: " + pair[0]);
-        console.log("Value is: " + pair[1]);
-        if (pair[0] !== 'total') arr.push({key: pair[0], value: pair[1]});
-        i += 1
+        
+        if (pair[0] !== 'total' && pair[0] !== 'quiz') {
+        
+          let name = questions.find((q) => q.name === pair[0]);
+          arr.push({key: pair[0], value: pair[1], desc: name.result_description});
+        } 
       }
 
-      console.log(arr)
+      document.getElementById('myTotal').innerHTML = total + ' %';
 
-      document.getElementById('one').innerHTML = arr[0].key;
-      document.getElementById('first').innerHTML = `He scored ${arr[0].value}, but can improve on ...`;
-      document.getElementById('two').innerHTML = arr[1].key;
-      document.getElementById('second').innerHTML = `He scored ${arr[1].value}, but can improve on ...`;
-      document.getElementById('three').innerHTML = arr[2].key;
-      document.getElementById('third').innerHTML = `He scored ${arr[2].value}, but can do better by ...`;
+      if (total === '100') {
 
+        console.log('im here')
+        document.getElementById('quiz_content').innerHTML = 'You crush is perfect! Congratulations!';
+      } else {
+        console.log(total)
+        console.log('im in else')
+        document.getElementById('one').innerHTML = arr[0].key;
+        document.getElementById('first').innerHTML = `He scored ${arr[0].value}, ${arr[0].desc}`;
+        document.getElementById('two').innerHTML = arr[1].key;
+        document.getElementById('second').innerHTML = `He scored ${arr[1].value}, ${arr[1].desc}`;
+        document.getElementById('three').innerHTML = arr[2].key;
+        document.getElementById('third').innerHTML = `He scored ${arr[2].value}, ${arr[2].desc}`;
+      }
 
       const progressBar = document.querySelectorAll("#progressBar");
 
@@ -75,10 +89,8 @@
     <script
     src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
     </script>
-    <script>
-      /* let paramString2 = urlString.split('?')[1];
-      let queryString2 = new URLSearchParams(paramString);  */ 
-      total = Number((total/65) * 100).toFixed();
+    <!-- <script>
+
       var data = {
         labels: [
           "score",
@@ -130,6 +142,6 @@
         }]
       });
 
-    </script>
+    </script> -->
   </body>
 </html>
