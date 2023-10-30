@@ -22,8 +22,8 @@
           type: 'choice',
           name: 'Vegetarian',
           query: 'Are you a vegetarian or vegan?',
-          result_description: 'Are you a vegetarian or vegan?',
-          result_avatar: '../cat_image.png',
+          result_description: 'he needs to improve',
+          result_avatar: '../images/puzzledcat.png',
           choice_and_points: [
             {
               choice: 'no',
@@ -89,14 +89,14 @@
           name: 'Recycles',
           query: 'Does he recycles materials such as plastic and paper?',
           result_description: 'Does he recycles materials such as plastic and paper?',
-          result_avatar: '../cat_image.png'          
+          result_avatar: '../images/cat_image.png'          
         },
         {
           type: 'regular',
           name: 'Lights',
           query: 'Does he recycles materials such as plastic and paper?',
           result_description: 'Does he recycles materials such as plastic and paper?',
-          result_avatar: '../cat_image.png'          
+          result_avatar: '../images/cat_image.png'          
         }
       ]
 
@@ -111,7 +111,7 @@
           name: 'Vegetarian',
           query: 'Are you a vegetarian or vegan?',
           result_description: 'Are you a vegetarian or vegan?',
-          result_avatar: '../cat_image.png',
+          result_avatar: '../images/cat_image.png',
           choice_and_points: [
             {
               choice: 'no',
@@ -177,13 +177,13 @@
           name: 'Recycles',
           query: 'Does he recycles materials such as plastic and paper?',
           result_description: 'Does he recycles materials such as plastic and paper?',
-          result_avatar: '../cat_image.png'          
+          result_avatar: '../images/cat_image.png'          
         },
         {
           type: 'regular',
           name: 'Lights',
           query: 'Does he recycles materials such as plastic and paper?',
           result_description: 'Does he recycles materials such as plastic and paper?',
-          result_avatar: '../cat_image.png'          
+          result_avatar: '../images/cat_image.png'          
         }
       ]

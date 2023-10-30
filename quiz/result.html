@@ -20,15 +20,15 @@
 
           <div class="quiz__result">
             <p><strong id="one">Recycle:</strong> <p id="first">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p></p>
-            <img src="../images/cat_image.png" alt="cat" />
+            <img id="image1" src="../images/cat_image.png" alt="avatar" />
           </div>
           <div class="quiz__result">
             <p><strong id="two">Commute:</strong> <p id="second"> ipsum dolor sit amet, consectetur adipiscing elit</p></p>
-            <img src="../images/cat_image.png" alt="cat" />
+            <img id="image2" src="../images/cat_image.png" alt="avatar" />
           </div>
           <div class="quiz__result">
             <p><strong id="three">Reduce consumption:</strong><p id="third"> Lorem ipsum dolor sit amet, consectetur adipiscing elit</p></p>
-            <img src="../images/cat_image.png" alt="cat" />
+            <img id="image3" src="../images/cat_image.png" alt="avatar" />
           </div>
         </div>
       </div>
@@ -54,7 +54,8 @@
         if (pair[0] !== 'total' && pair[0] !== 'quiz') {
         
           let name = questions.find((q) => q.name === pair[0]);
-          arr.push({key: pair[0], value: pair[1], desc: name.result_description});
+          console.log(name.result_avatar)
+          arr.push({key: pair[0], value: pair[1], desc: name.result_description, image: name.result_avatar});
         } 
       }
 
@@ -62,17 +63,18 @@
 
       if (total === '100') {
 
-        console.log('im here')
         document.getElementById('quiz_content').innerHTML = 'You crush is perfect! Congratulations!';
       } else {
         console.log(total)
-        console.log('im in else')
         document.getElementById('one').innerHTML = arr[0].key;
         document.getElementById('first').innerHTML = `He scored ${arr[0].value}, ${arr[0].desc}`;
+        document.getElementById('image1').setAttribute('src', arr[0].image);
         document.getElementById('two').innerHTML = arr[1].key;
         document.getElementById('second').innerHTML = `He scored ${arr[1].value}, ${arr[1].desc}`;
+        document.getElementById('image2').setAttribute('src', arr[1].image);
         document.getElementById('three').innerHTML = arr[2].key;
         document.getElementById('third').innerHTML = `He scored ${arr[2].value}, ${arr[2].desc}`;
+        document.getElementById('image3').setAttribute('src', arr[2].image);
       }
 
       const progressBar = document.querySelectorAll("#progressBar");
